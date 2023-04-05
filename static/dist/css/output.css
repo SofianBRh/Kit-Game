@@ -56,12 +56,16 @@ html {
 1. Remove the margin in all browsers.
 2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
 */
+img{
 
+
+
+}
 body {
-  margin: 10%;
-  /* 1 */
-  line-height: inherit;
-  /* 2 */
+  
+  background-color: #DBF9FC;
+  margin: 3%;
+  
 }
 
 /*
@@ -377,11 +381,26 @@ button,
 [role="button"] {
   cursor: pointer;
 }
+form{
+  width: 100px;
+    margin: auto;
+    display: block;
 
+}
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
+.header img{
+    width: 100px;
+    margin: auto;
+    display: block;
 
+}
+.header{
+  padding-bottom: 13%;
+  
+
+}
 :disabled {
   cursor: default;
 }
@@ -400,10 +419,10 @@ audio,
 iframe,
 embed,
 object {
-  display: block;
+ 
   /* 1 */
-  vertical-align: middle;
-  /* 2 */
+  
+ /* 2 */
 }
 
 /*
@@ -411,6 +430,8 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 */
 
 img,
+
+
 video {
   max-width: 100%;
   height: auto;
