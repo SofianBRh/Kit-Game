@@ -62,11 +62,21 @@ img{
 
 }
 body {
-  
   background-color: #DBF9FC;
   margin: 3%;
-  
+  background-image: url("url_for('static',filename='images/logo.png')") ;
+  animation: ripple 10s linear infinite;
 }
+
+@keyframes ripple {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
 
 /*
 1. Add the correct height in Firefox.
