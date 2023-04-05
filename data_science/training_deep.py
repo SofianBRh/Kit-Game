@@ -53,8 +53,10 @@ model = keras.models.Sequential()
 model.add(
     keras.layers.InputLayer(input_shape=(params.sequence_len, params.features_len))
 )
-model.add(keras.layers.LSTM(100, activation="relu"))
-model.add(keras.layers.Dropout(0.2))
+for i in range(1, 3):
+    model.add(keras.layers.LSTM(params.lstm, activation="relu"))
+    model.add(keras.layers.Dropout(params.dropout))
+
 model.add(keras.layers.Dense(params.features_len))
 
 model.summary()
