@@ -1,15 +1,24 @@
 import pandas as pd
-import params
-
+import data_science.params as params
+from flask import Flask, request, render_template, redirect, url_for
+import os
 
 class Dataframe:
 
     # default constructor
     def __init__(self, path_csv):
-        self.df = pd.read_csv(path_csv)
+        dir_path = os.path.dirname(os.path.abspath(__file__))
+        assets_dir = os.path.join(dir_path, 'assets')
+        current_file_path = os.path.abspath(__file__)
+        print('current path',current_file_path)
+        # Obtenir le chemin absolu vers le répertoire parent du script actuel
+        project_dir_path = os.path.dirname(current_file_path)
+        print('project_dir_path path',project_dir_path)
+
+        self.df = pd.read_csv(os.path.join(assets_dir, path_csv))
         # Création de la dataframe avec une colonne 'date'
         self.df["Date_Heure"] = pd.to_datetime(
-            self.df["Date_Heure"], format=("%Y-%m-%dT%H:%M:%S.%f")
+            self.df["Date_Heure"]
         )
         # Encodage one-hot de la colonne 'date'
         self.df[["Spring", "Summer", "Autumn", "Winter"]] = (

@@ -2,78 +2,94 @@
 {% block body %}
 
 <body class="flex flex-col min-h-screen ">
-  {% block header %}
-  <div class="header object-center">
-    <div> <img class="object-center" src="{{url_for('static',filename='images/logo.png')}}" width="20%"></div>
+    {% block header %}
+    <div class="header object-center">
+        <div> <img class="object-center" src="{{url_for('static',filename='images/logo.png')}}" width="20%"></div>
 
-  </div>
-  {% endblock %}
-
-  {% block main %}
-
-  <div class="main   ">
-    <!--The div contain the two input -->
-    <div class=" Formulaire ">
-      <form class="grid-cols-5 w-full max-w-sm border-solid ">
-        <div class=" border-solid flex  border-teal-500 py-2">
-          <input class=" pb-5 border w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text"
-            placeholder="Jour" aria-label="Full name">
-
-
-
-        
-        
-          <input
-            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="file" placeholder="Jane Doe" aria-label="Full name">
-          <button
-              class="items-center bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-              type="button">
-              envoyez
-            </button>
-          
-        
-      </form>
-
-      
     </div>
-   <p class="border">  </p>
+    {% endblock %}
 
-  </div>
+    {% block main %}
+
+    <div class="main   ">
+        <!--The div contain the two input -->
+        <div class=" Formulaire ">
+            <form id="predict_form" enctype="multipart/form-data" action="/" method="POST"
+                class="grid-cols-5 w-full max-w-sm border-solid ">
+                <div class=" border-solid flex  border-teal-500 py-2">
+                    <input name="number"
+                        class=" pb-5 border w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                        type="text" placeholder="Jour" aria-label="Full name">
 
 
-  {% endblock %}
 
-  {% block footer %}
 
-  <footer class=" pt-10 bg-neutral-200 text-center text-white dark:bg-neutral-600 dark:text-neutral-200">
-    <div class="container p-6">
-      <div class="flex p-2">
-        <div class="mb-6 lg:mb-0">
-          <img src="https://tecdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-full rounded-md shadow-lg" />
+
+                    <input name="file"
+                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                        type="file" placeholder="Jane Doe" aria-label="Full name">
+                    <button
+                        class="items-center bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                        type="submit">
+                        envoyez
+                    </button>
+
+
+            </form>
+
+
         </div>
-        <div class="mb-6 lg:mb-0">
-          <img src="https://tecdn.b-cdn.net/img/new/fluid/city/111.webp" class="w-full rounded-md shadow-lg" />
+        <p class="border">
+        <div id="graph">
+
         </div>
-        <div class="mb-6 lg:mb-0">
-          <img src="https://tecdn.b-cdn.net/img/new/fluid/city/112.webp" class="w-full rounded-md shadow-lg" />
-        </div>
-        <div class="mb-6 lg:mb-0">
-          <img src="https://tecdn.b-cdn.net/img/new/fluid/city/114.webp" class="w-full rounded-md shadow-lg" />
-        </div>
-        <div class="mb-6 lg:mb-0">
-          <img src="https://tecdn.b-cdn.net/img/new/fluid/city/115.webp" class="w-full rounded-md shadow-lg" />
-        </div>
-        <div class="mb-6 lg:mb-0">
-          <img src="https://tecdn.b-cdn.net/img/new/fluid/city/116.webp" class="w-full rounded-md shadow-lg" />
-        </div>
-      </div>
+
+        </p>
+
     </div>
 
-    <div class="bg-neutral-300 p-4 text-center text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200">
-      © 2023 Copyright:
-      <a class="dark:text-neutral-400" href="https://tailwind-elements.com/">Tailwind Elements</a>
-    </div>
-  </footer>
-  {% endblock %}
-  {% endblock %}
+
+    {% endblock %}
+
+    {% block footer %}
+
+    <footer class=" pt-10 bg-neutral-200 text-center text-white dark:bg-neutral-600 dark:text-neutral-200">
+        <div class="container p-6">
+            <div class="flex p-2">
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/113.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/111.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/112.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/114.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/115.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+                <div class="mb-6 lg:mb-0">
+                    <img src="https://tecdn.b-cdn.net/img/new/fluid/city/116.webp"
+                        class="w-full rounded-md shadow-lg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-neutral-300 p-4 text-center text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200">
+            © 2023 Copyright:
+            <a class="dark:text-neutral-400" href="https://tailwind-elements.com/">Tailwind Elements</a>
+        </div>
+    </footer>
+
+
+
+    {% endblock %}
+    {% endblock %}

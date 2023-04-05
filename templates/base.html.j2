@@ -8,6 +8,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="{{url_for('static',filename='dist/js/prediction.js')}}"></script>
 </head>
 
 <body>
@@ -23,6 +27,7 @@
     <footer>
         {% block footer %}{% endblock %}
     </footer>
+
 </body>
 
 </html>

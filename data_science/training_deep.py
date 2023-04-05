@@ -8,7 +8,7 @@ from Dataframe import Dataframe
 from Dataset import Dataset
 from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
-import params
+import data_science.params as params
 
 tf.config.list_physical_devices("GPU")
 sys_details = tf.sysconfig.get_build_info()
