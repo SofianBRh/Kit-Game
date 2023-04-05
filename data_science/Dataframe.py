@@ -1,11 +1,12 @@
 import pandas as pd
+import params
 
 
 class Dataframe:
 
     # default constructor
-    def __init__(self):
-        self.df = pd.read_csv("/home/kyabe/cours/kitgames/Kit-Game/assets/donnees.csv")
+    def __init__(self, path_csv):
+        self.df = pd.read_csv(path_csv)
         # Création de la dataframe avec une colonne 'date'
         self.df["Date_Heure"] = pd.to_datetime(
             self.df["Date_Heure"], format=("%Y-%m-%dT%H:%M:%S.%f")
@@ -18,7 +19,13 @@ class Dataframe:
         self.df[["week", "weekend"]] = (
             self.df["Date_Heure"].apply(self.one_hot_weekday).apply(pd.Series)
         )
+
+        temp_median = self.df["Température"].median()
+
+        # remplacement des valeurs nulles par la mediane
+        self.df["Température"].fillna(temp_median, inplace=True)
         self.df.columns = self.df.columns.str.replace(" ", "_")
+        self.df = self.df[: int(params.scale * len(self.df))]
 
     def one_hot_season(self, date):
         month = date.month

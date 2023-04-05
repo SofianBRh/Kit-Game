@@ -10,24 +10,17 @@ from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
 import params
 
-dataframe = Dataframe()
+tf.config.list_physical_devices("GPU")
+sys_details = tf.sysconfig.get_build_info()
+cuda = sys_details["cuda_version"]
+cudnn = sys_details["cudnn_version"]
+print(cuda, cudnn)
+
+dataframe = Dataframe(params.path)
 df = dataframe.get_dataframe()
-
-
-print(len(df))
-df = df[: int(params.scale * len(df))]
-print(len(df))
-
-temp_median = df["Température"].median()
-
-# remplacement des valeurs nulles par la mediane
-df["Température"].fillna(temp_median, inplace=True)
 
 train_len = int(params.train_prop * len(df))
 
-
-df.isnull().sum()
-df.fillna(df["Température_(°C)"].mean(), inplace=True)
 
 dataset = Dataset(df, train_len, params.features)
 dataset_train, dataset_test = dataset.get_dataset()
