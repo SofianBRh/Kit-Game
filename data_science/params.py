@@ -18,3 +18,5 @@ epochs = 150
 fit_verbosity = 1
 iterations = 4
 path = "/home/kyabe/cours/kitgames/Kit-Game/assets/donnees.csv"
+lstm = 80
+dropout = 0.2
