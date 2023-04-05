@@ -11,7 +11,7 @@ from Dataframe import Dataframe
 import params
 
 
-loaded_model = tf.keras.models.load_model(f"./best_model.h5")
+loaded_model = tf.keras.models.load_model(f"data_science/best_model.h5")
 
 dataframe = Dataframe(params.path)
 df = dataframe.get_dataframe()
@@ -80,7 +80,9 @@ def get_prediction(dataset, model, iterations=4, sequence_len=16):
     return sequence_true, pred
 
 
-sequence_true, pred = get_prediction(dataset_test, loaded_model, iterations=4)
+sequence_true, pred = get_prediction(
+    dataset_test, loaded_model, params.iterations, params.sequence_len
+)
 print(pred)
 print(sequence_true)
 
