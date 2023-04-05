@@ -10,9 +10,10 @@ from Dataset import Dataset
 from Dataframe import Dataframe
 import params
 
+
 loaded_model = tf.keras.models.load_model(f"./best_model.h5")
 
-dataframe = Dataframe()
+dataframe = Dataframe(params.path)
 df = dataframe.get_dataframe()
 train_len = int(params.train_prop * len(df))
 dataset = Dataset(df, train_len, params.features)

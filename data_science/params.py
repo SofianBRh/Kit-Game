@@ -14,6 +14,7 @@ scale = 0.9  # Percentage of dataset to be used (1=all)
 train_prop = 0.8  # Percentage for train (the rest being for the test)
 sequence_len = 16
 batch_size = 32
-epochs = 10
+epochs = 150
 fit_verbosity = 1
 iterations = 4
+path = "/home/kyabe/cours/kitgames/Kit-Game/assets/donnees.csv"
