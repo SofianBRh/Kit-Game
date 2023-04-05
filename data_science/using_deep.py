@@ -9,6 +9,7 @@ import tensorflow as tf
 from Dataset import Dataset
 from Dataframe import Dataframe
 import params
+import plotly.express as px
 
 
 loaded_model = tf.keras.models.load_model(f"data_science/best_model.h5")
@@ -94,32 +95,35 @@ deuxieme_colonne = [ligne[1] for ligne in sequence_true]
 pred_co = [ligne[1] for ligne in pred]
 
 
-print(deuxieme_colonne)
-print(deuxieme_colonne[: -params.iterations])
+# print(deuxieme_colonne)
+# print(deuxieme_colonne[: -params.iterations])
 
-print(pred_co)
+# print(pred_co)
 
 # On récupère la valeur réelle de la température au 17ème jour
 y_true = deuxieme_colonne[-params.iterations :]
 
 print(y_true)
 # On trace la courbe de la température pour les 16 premiers jours
-plt.plot(deuxieme_colonne[: -params.iterations])
+# plt.plot(deuxieme_colonne[: -params.iterations])
 
-# On trace la valeur réelle de la température au 17ème jour en rouge
-for i in range(params.iterations):
-    print(y_true[i])
-    print(i + 1)
+# # On trace la valeur réelle de la température au 17ème jour en rouge
+# for i in range(params.iterations):
+#     print(y_true[i])
+#     print(i + 1)
 
-    plt.plot((len(deuxieme_colonne) - params.iterations) + (i + 1), y_true[i], "ro")
+#     plt.plot((len(deuxieme_colonne) - params.iterations) + (i + 1), y_true[i], "ro")
 
-# On trace la valeur prédite de la température au 17ème jour en vert
-for i in range(params.iterations):
-    plt.plot((len(deuxieme_colonne) - params.iterations) + (i + 1), pred_co[i], "go")
+# # On trace la valeur prédite de la température au 17ème jour en vert
+# for i in range(params.iterations):
+#     plt.plot((len(deuxieme_colonne) - params.iterations) + (i + 1), pred_co[i], "go")
 
-# On ajoute des labels pour l'axe x et l'axe y
-plt.xlabel("Temps")
-plt.ylabel("Température")
+# # On ajoute des labels pour l'axe x et l'axe y
+# plt.xlabel("Temps")
+# plt.ylabel("Température")
 
-# On affiche le graphique
-plt.show()
+# # On affiche le graphique
+# plt.show()
+
+fig = px.ecdf(df, x="total_bill", color="sex")
+fig.show()
