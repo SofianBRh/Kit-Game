@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from Prediction import Prediction
-from flask_restful import  Api 
+from flask_restful import Api 
 
 app = Flask("Konoha_Team7")
 

@@ -579,6 +579,10 @@ video {
           appearance: none;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .items-center {
   align-items: center;
 }
@@ -724,6 +728,40 @@ video {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
 }
+
+
+
+
+
+.py-10 {
+  padding: 2.5rem 0 2.5rem 0;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.text-black {
+  color: black;
+}
+
+.avatar {
+  width: 150px !important;
+  height: 150px !important;
+}
+
+
+
+
+
+
+
+
+
 
 @media (prefers-color-scheme: dark) {
   .dark\:border-gray-600 {
