@@ -8,6 +8,8 @@ features = [
     "Summer",
     "Spring",
 ]
+
+features_w_date   = ['Température', 'consommation', 'weekend', 'Date_Heure', 'week', 'Winter', 'Autumn', 'Summer', 'Spring']
 features_len = len(features)
 
 scale = 0.9  # Percentage of dataset to be used (1=all)

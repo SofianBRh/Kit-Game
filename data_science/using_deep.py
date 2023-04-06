@@ -19,17 +19,21 @@ def predict(nb_predictions, path, position):
     dataframe = Dataframe(path)
     df = dataframe.get_dataframe()
     train_len = int(params.train_prop * len(df))
-    dataset = Dataset(df, train_len, params.features)
+    dataset = Dataset(df, train_len, params.features, params.features_w_date)
     mean = dataset.get_mean()
     std = dataset.get_std()
 
     dataset_train, dataset_test = dataset.get_dataset()
+    dataset_train_copy, dataset_test_copy = dataset.get_dataset_copy()
 
 
     s = random.randint(0, len(dataset_test) - params.sequence_len - nb_predictions)
 
     sequence_pred = dataset_test[s : s + params.sequence_len].copy()
     sequence_true = dataset_test[s : s + params.sequence_len + nb_predictions].copy()
+
+    sequence_pred_date = dataset_test_copy[s:s+params.sequence_len].copy()
+    sequence_true_date = dataset_test_copy[s:s+params.sequence_len+nb_predictions].copy()
 
     # ---- Iterate on 4 predictions
 
@@ -45,8 +49,8 @@ def predict(nb_predictions, path, position):
     # ---- Extract the predictions
 
     pred = np.array(sequence_pred[-nb_predictions :])
-    sequence_true, pred = get_prediction(
-    dataset_test, mean, std, loaded_model, nb_predictions, params.sequence_len
+    sequence_true, pred , sequence_pred_date, sequence_true_date = get_prediction(
+    dataset_test, mean, std, loaded_model, dataset_test_copy, nb_predictions, params.sequence_len
     )
     print(pred)
     print(sequence_true)
@@ -96,7 +100,7 @@ def predict(nb_predictions, path, position):
     # fig = px.ecdf(df, x="total_bill", color="sex")
     # fig.show()
 
-    return deuxieme_colonne, pred_co
+    return deuxieme_colonne, pred_co, sequence_pred_date, sequence_true_date
 
 
 def denormalize(mean, std, seq):
@@ -107,7 +111,7 @@ def denormalize(mean, std, seq):
     return nseq
 
 
-def get_prediction(dataset,mean, std, model, iterations=4, sequence_len=16):
+def get_prediction(dataset,mean, std, model, dataset_test_copy, iterations=4, sequence_len=16, ):
 
     # ---- Initial sequence
 
@@ -115,6 +119,10 @@ def get_prediction(dataset,mean, std, model, iterations=4, sequence_len=16):
 
     sequence_pred = dataset[s : s + sequence_len].copy()
     sequence_true = dataset[s : s + sequence_len + iterations].copy()
+
+
+    sequence_pred_date = dataset_test_copy[s+sequence_len:s+sequence_len+iterations].copy()
+    sequence_true_date = dataset_test_copy[s:s+sequence_len+iterations].copy()
 
     # ---- Iterate
 
@@ -134,7 +142,7 @@ def get_prediction(dataset,mean, std, model, iterations=4, sequence_len=16):
     sequence_true = denormalize(mean, std, sequence_true)
     pred = denormalize(mean, std, pred)
 
-    return sequence_true, pred
+    return sequence_true, pred, sequence_pred_date, sequence_true_date
 
 
 

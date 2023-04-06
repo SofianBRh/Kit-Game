@@ -9,6 +9,8 @@ from Dataset import Dataset
 from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
 import params
+from tensorflow.keras.callbacks import EarlyStopping
+
 
 # tf.config.list_physical_devices("GPU")
 # sys_details = tf.sysconfig.get_build_info()
@@ -32,7 +34,7 @@ df = dataframe.get_dataframe()
 train_len = int(params.train_prop * len(df))
 
 
-dataset = Dataset(df, train_len, params.features)
+dataset = Dataset(df, train_len, params.features, params.features_w_date)
 dataset_train, dataset_test = dataset.get_dataset()
 
 train_generator = TimeseriesGenerator(
@@ -56,8 +58,12 @@ x, y = train_generator[0]
 
 save_dir = f"./best_model.h5"
 bestmodel_callback = tf.keras.callbacks.ModelCheckpoint(
-    filepath=save_dir, verbose=0, save_best_only=True
+    filepath=save_dir, verbose=0, save_best_only=True, monitor='val_loss', patience=5, mode='min', restore_best_weights=True
 )
+
+# Callback EarlyStopping
+# early_stopping = EarlyStopping(monitor='val_loss', patience=5, mode='min', restore_best_weights=True)
+
 
 model = keras.models.Sequential()
 model.add(

@@ -56,20 +56,20 @@ def predict_new():
         # print('project_dir_path path',project_dir_path)
         # print('assets_dir path',assets_dir)
         # print('path_final path',path_final)
-        reel_conso_value, predicted_conso_value = predict.predict(number, path_final,1)
-        reel_temp_value, predicted_temp_value = predict.predict(number, path_final, 0)
+        reel_conso_value, predicted_conso_value, sequence_pred_date, sequence_true_date = predict.predict(number, path_final,1)
+        reel_temp_value, predicted_temp_value, sequence_pred_date, sequence_true_date = predict.predict(number, path_final, 0)
         # print("real", a)
         # print("predict", b)
 
         data = {
-            'consomation':make_graph(predicted_conso_value,reel_conso_value, 'Consomation'),
-            'temperature': make_graph(predicted_temp_value,reel_temp_value, 'Température (°C)')
+            'consomation':make_graph(predicted_conso_value,reel_conso_value, sequence_pred_date, sequence_true_date, 'Consomation'),
+            'temperature': make_graph(predicted_temp_value,reel_temp_value, sequence_pred_date, sequence_true_date, 'Température (°C)')
         }
         
     return jsonify(data)
 
 
-def make_graph(valeurs_predites,valeurs_reelles, graph_title):
+def make_graph(valeurs_predites,valeurs_reelles, sequence_pred_date, sequence_true_date, graph_title):
     import plotly.graph_objects as go
 
     # données réelles et prédictions
@@ -84,13 +84,13 @@ def make_graph(valeurs_predites,valeurs_reelles, graph_title):
 
     # tracer la courbe de points pour les valeurs réelles
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=list(indices_reels), y=valeurs_reelles,
+    fig.add_trace(go.Scatter(x=list(sequence_true_date['Date_Heure']), y=valeurs_reelles,
                             mode='markers+lines',
                             name='Valeurs réelles',
                             line=dict(color='blue', width=2)))
 
     # tracer la courbe de points pour les valeurs prédites
-    fig.add_trace(go.Scatter(x=list(indices_predits), y=valeurs_predites,
+    fig.add_trace(go.Scatter(x=list(sequence_pred_date['Date_Heure']), y=valeurs_predites,
                             mode='markers+lines',
                             name='Valeurs prédites',
                             line=dict(color='red', width=2, dash='dot')))

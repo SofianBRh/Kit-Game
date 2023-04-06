@@ -1,5 +1,5 @@
 import pandas as pd
-import params 
+import data_science.params as params
 from flask import Flask, request, render_template, redirect, url_for
 import os
 
