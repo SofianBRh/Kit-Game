@@ -1,5 +1,5 @@
 import matplotlib
-
+import os
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -8,15 +8,25 @@ from Dataframe import Dataframe
 from Dataset import Dataset
 from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
-import data_science.params as params
+import params
 
-tf.config.list_physical_devices("GPU")
-sys_details = tf.sysconfig.get_build_info()
-cuda = sys_details["cuda_version"]
-cudnn = sys_details["cudnn_version"]
-print(cuda, cudnn)
+# tf.config.list_physical_devices("GPU")
+# sys_details = tf.sysconfig.get_build_info()
+# cuda = sys_details["cuda_version"]
+# cudnn = sys_details["cudnn_version"]
+# print(cuda, cudnn)
 
-dataframe = Dataframe(params.path)
+current_file_path = os.path.abspath(__file__)
+print('current path',current_file_path)
+# Obtenir le chemin absolu vers le répertoire parent du script actuel
+project_dir_path = os.path.dirname(current_file_path)
+main_dir = os.path.dirname(project_dir_path)
+path_final = os.path.join(main_dir, 'assets')
+path = os.path.join(path_final, params.path)
+print('project_dir_path path',project_dir_path)
+print('assets_dir path',main_dir)
+print('path_final path',path_final)
+dataframe = Dataframe(path)
 df = dataframe.get_dataframe()
 
 train_len = int(params.train_prop * len(df))
@@ -54,8 +64,11 @@ model.add(
     keras.layers.InputLayer(input_shape=(params.sequence_len, params.features_len))
 )
 for i in range(1, 3):
-    model.add(keras.layers.LSTM(params.lstm, activation="relu"))
-    model.add(keras.layers.Dropout(params.dropout))
+    model.add( keras.layers.LSTM(100, activation='relu', return_sequences=True) )
+    model.add( keras.layers.Dropout(0.2) )
+
+model.add( keras.layers.LSTM(100, activation='relu') )
+model.add( keras.layers.Dropout(0.2) )
 
 model.add(keras.layers.Dense(params.features_len))
 

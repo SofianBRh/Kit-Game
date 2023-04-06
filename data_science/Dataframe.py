@@ -1,5 +1,5 @@
 import pandas as pd
-import data_science.params as params
+import params 
 from flask import Flask, request, render_template, redirect, url_for
 import os
 
@@ -10,16 +10,17 @@ class Dataframe:
         dir_path = os.path.dirname(os.path.abspath(__file__))
         assets_dir = os.path.join(dir_path, 'assets')
         current_file_path = os.path.abspath(__file__)
-        print('current path',current_file_path)
+        # print('current path',current_file_path)
         # Obtenir le chemin absolu vers le répertoire parent du script actuel
         project_dir_path = os.path.dirname(current_file_path)
-        print('project_dir_path path',project_dir_path)
+        # print('project_dir_path path',project_dir_path)
 
         self.df = pd.read_csv(os.path.join(assets_dir, path_csv))
         # Création de la dataframe avec une colonne 'date'
         self.df["Date_Heure"] = pd.to_datetime(
             self.df["Date_Heure"]
         )
+        self.df.sort_values(['Date_Heure'],  inplace=True)
         # Encodage one-hot de la colonne 'date'
         self.df[["Spring", "Summer", "Autumn", "Winter"]] = (
             self.df["Date_Heure"].apply(self.one_hot_season).apply(pd.Series)

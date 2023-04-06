@@ -1,7 +1,7 @@
 import random
 
 import matplotlib
-
+import os
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,7 +12,7 @@ import data_science.params as params
 import plotly.express as px
 
 
-def predict(nb_predictions, path):
+def predict(nb_predictions, path, position):
 
     loaded_model = tf.keras.models.load_model(f"data_science/best_model.h5")
 
@@ -55,8 +55,12 @@ def predict(nb_predictions, path):
     # X_train contient les données des 16 premiers jours (16 x T x N) où T est le nombre de temps et N est le nombre de variables
     # y_train contient les valeurs réelles de la température au 17ème jour (T x 1)
     # y_pred contient les valeurs prédites de la température au 17ème jour (1 x 1)
-    deuxieme_colonne = [ligne[1] for ligne in sequence_true]
-    pred_co = [ligne[1] for ligne in pred]
+    if position== 0:
+        deuxieme_colonne = [ligne[position]-273.15 for ligne in sequence_true]
+        pred_co = [ligne[position] -273.15 for ligne in pred]
+    else:
+        deuxieme_colonne = [ligne[position] for ligne in sequence_true]
+        pred_co = [ligne[position] for ligne in pred]
 
 
     # print(deuxieme_colonne)

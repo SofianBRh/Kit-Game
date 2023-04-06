@@ -22,39 +22,6 @@ def prediction():
 @app.route("/", methods=['GET', 'POST'])
 def home():
     title = "Konoha_Team7"
-    if request.method == 'POST':
-        print('in post')
-        # Vérifie si le fichier est bien présent dans la requête
-        number = int(request.form['number'])
-        print('nombre', number)
-        print('ttoot')
-        # if 'file' not in request.files:
-        #     print('not file in')
-        #     return redirect(request.url)
-        # file = request.files['file']
-        # # Vérifie si le nom de fichier est vide
-        # if file.filename == '':
-        #     print('empty')
-        #     return redirect(request.url)
-        # # Enregistre le fichier dans le dossier assets
-        # if file:
-        #     filename = file.filename
-        #     print('filename', filename)
-        #     file.save(os.path.join(UPLOAD_FOLDER, filename))
-        #     # return redirect(url_for('display_file', filename=filename))
-        current_file_path = os.path.abspath(__file__)
-        print('current path',current_file_path)
-        # Obtenir le chemin absolu vers le répertoire parent du script actuel
-        project_dir_path = os.path.dirname(current_file_path)
-        assets_dir = os.path.join(project_dir_path, 'assets')
-        path_final = os.path.join(assets_dir, params.path)
-        print('project_dir_path path',project_dir_path)
-        print('assets_dir path',assets_dir)
-        print('path_final path',path_final)
-        a, b = predict.predict(number, path_final)
-        print("real", a)
-        print("predict", b)
-        make_graph(b,a)
     return render_template("index.html.j2", title=title)
 
 @app.route("/predict", methods=['POST'])
@@ -86,22 +53,23 @@ def predict_new():
         project_dir_path = os.path.dirname(current_file_path)
         assets_dir = os.path.join(project_dir_path, 'assets')
         path_final = os.path.join(assets_dir, params.path)
-        print('project_dir_path path',project_dir_path)
-        print('assets_dir path',assets_dir)
-        print('path_final path',path_final)
-        a, b = predict.predict(number, path_final)
-        print("real", a)
-        print("predict", b)
+        # print('project_dir_path path',project_dir_path)
+        # print('assets_dir path',assets_dir)
+        # print('path_final path',path_final)
+        reel_conso_value, predicted_conso_value = predict.predict(number, path_final,1)
+        reel_temp_value, predicted_temp_value = predict.predict(number, path_final, 0)
+        # print("real", a)
+        # print("predict", b)
 
         data = {
-            'consomation':make_graph(b,a),
-            'temperature': "ee"
+            'consomation':make_graph(predicted_conso_value,reel_conso_value, 'Consomation'),
+            'temperature': make_graph(predicted_temp_value,reel_temp_value, 'Température (°C)')
         }
         
     return jsonify(data)
 
 
-def make_graph(valeurs_predites,valeurs_reelles):
+def make_graph(valeurs_predites,valeurs_reelles, graph_title):
     import plotly.graph_objects as go
 
     # données réelles et prédictions
@@ -131,7 +99,7 @@ def make_graph(valeurs_predites,valeurs_reelles):
     fig.update_xaxes(title='Temps')
 
     # personnalisation de l'axe y
-    fig.update_yaxes(title='Température (°C)')
+    fig.update_yaxes(title=graph_title)
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     # afficher la figure
     # fig.show()
