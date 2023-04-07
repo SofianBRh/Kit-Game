@@ -24,6 +24,7 @@ $(document).ready(function () {
             cache: false,
             success: function (response) {
                 loader.classList.add('hidden');
+                $('#input-number').val("")
                 var plotData = JSON.parse(response.consomation);
                 var plotData_temperature = JSON.parse(response.temperature);
                 Plotly.newPlot('graph', plotData.data, plotData.layout);

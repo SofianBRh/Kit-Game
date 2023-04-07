@@ -32,3 +32,25 @@
     transform: rotate(360deg);
   }
 }
+
+
+.py-10 {
+  padding: 2.5rem 0 2.5rem 0;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.text-black {
+  color: black;
+}
+
+.avatar {
+  width: 150px !important;
+  height: 150px !important;
+}
